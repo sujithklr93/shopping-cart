@@ -1,2 +1,2 @@
 # shopping-cart
-Angular
+React,NextJS, Java, Springboot
