@@ -1,9 +1,19 @@
 package com.shoppingcart.server.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.Date;
+
+@Entity
+@Table(name = "product")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,36 +21,12 @@ public class ProductEntity {
     private String name;
     private String price;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    @CreationTimestamp
+    @Column(nullable = true, name="created_at")
+    private Date createdAt;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @UpdateTimestamp
+    @Column(nullable = true, name = "updated_at")
+    private Date updatedAt;
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public ProductEntity(long id, String name, String price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-
-    public ProductEntity() {
-    }
 }

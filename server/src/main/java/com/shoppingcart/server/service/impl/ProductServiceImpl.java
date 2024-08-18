@@ -1,22 +1,26 @@
-package com.shoppingcart.server.service;
+package com.shoppingcart.server.service.impl;
 
 import com.shoppingcart.server.entity.ProductEntity;
 import com.shoppingcart.server.model.Product;
 import com.shoppingcart.server.repository.ProductRepository;
+import com.shoppingcart.server.service.ProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ProductServiceImpl implements ProductService{
+@Service
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Override
     public Product saveProduct(Product product) {
         ProductEntity productEntity = new ProductEntity();
         BeanUtils.copyProperties(product, productEntity);
+        productRepository.save(productEntity);
         return product;
     }
 
@@ -29,5 +33,10 @@ public class ProductServiceImpl implements ProductService{
             product.getPrice()
         )).collect(Collectors.toList());
         return products;
+    }
+
+    @Override
+    public Optional<ProductEntity> getProductById(Long id){
+       return productRepository.findById(id);
     }
 }
